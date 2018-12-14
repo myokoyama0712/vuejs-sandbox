@@ -13,5 +13,8 @@ p2 = new Promise((resolve) => {
   resolve(42)
 })
 
+console.log(p1)
+console.log(p2)
+
 p1.then(value => console.log('P1: ' + value))
 p2.then(value => console.log('P2: ' + value))
