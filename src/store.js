@@ -3,6 +3,64 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+// 例示用に非同期処理を行う関数
+// 実際のアプリではサーバーからデータを取得する
+function getCountNum(type) {
+  return new Promise(resolve => {
+    // 1秒後にtypeに応じたデータを返す
+    setTimeout(() => {
+      let amount
+      switch (type) {
+        case 'one':
+          amount = 1
+          break
+        case 'two':
+          amount = 2
+          break
+        case 'ten':
+          amount = 10
+          break
+        default:
+          amount = 0
+      }
+      resolve({ amount })
+    }, 1000)
+  })
+}
+
+// カウンターモジュールを定義
+const counter = {
+  // ステート
+  state: {
+    count: 10,
+  },
+  // ゲッター
+  getters: {
+    squared: state => state.count*state.count
+  },
+  // ミューテーション
+  mutations: {
+    increment(state, amount) {
+      state.count += amount
+    },
+  },
+  // アクション
+  actions: {
+    incrementAsync({ commit }, payload) {
+      return getCountNum(payload.type)
+              .then(data => {
+                commit('increment', data.amount)
+              })
+    }
+  },
+  // モジュールは入れ子に定義することができる
+//  modules: {
+//    childModule: {
+//      // ... 入れ子モジュールの定義 ...
+//    },
+//  },
+}
+
 export default new Vuex.Store({
   state: {
     // タスクの初期ステート
@@ -41,6 +99,7 @@ export default new Vuex.Store({
     },
   },
 
+  // ミューテーションのメソッドの第2引数はpayloadと呼ばれる単一オブジェクト
   mutations: {
     // タスクを追加する
     addTask(state, { name, labelIds }) {
@@ -85,6 +144,8 @@ export default new Vuex.Store({
     },
   },
 
+  // アクションのメソッドの第1引数はコンテキスト(ctx)というオブジェクトであることに注意
+  // 第2引数はミューテーションと同じくpayload
   actions: {
     // ローカルストレージにステートを保存する
     save({ state }) {
@@ -105,5 +166,10 @@ export default new Vuex.Store({
         commit('restore', JSON.parse(data))
       }
     }
-  }
+  },
+
+  // counterモジュールをストアに登録
+  modules: {
+    counter,
+  },
 })
