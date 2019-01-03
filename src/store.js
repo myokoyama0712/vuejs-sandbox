@@ -22,6 +22,22 @@ export default new Vuex.Store({
     // 実際のアプリではサーバで生成したり、UUIDを使ったりするがここでは決め打ち
     nextTaskId: 3,
     nextLabelId: 4,
+
+    // フィルタするラベルのID
+    filter: null,
+  },
+  getters: {
+    // フィルタ後のタスクを返す
+    filteredTasks(state) {
+      // ラベルが選択されていなければそのままの一覧を返す
+      if (!state.filter) {
+        return state.tasks
+      }
+      // 選択されているラベルでフィルタリングする
+      return state.tasks.filter(task => {
+        return task.labelIds.indexOf(state.filter) >= 0
+      })
+    },
   },
   mutations: {
     // タスクを追加する
@@ -51,7 +67,12 @@ export default new Vuex.Store({
       state.labels.push({ id: state.nextLabelId, text, })
       // 次に追加されるラベルに付与するIDを更新する
       state.nextLabelId++
-    }
+    },
+
+    // フィルタリング対象のラベルを変更する
+    changeFilter(state, { filter }) {
+      state.filter = filter
+    },
   },
   actions: {
 
