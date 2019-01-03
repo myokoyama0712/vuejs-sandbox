@@ -26,6 +26,7 @@ export default new Vuex.Store({
     // フィルタするラベルのID
     filter: null,
   },
+
   getters: {
     // フィルタ後のタスクを返す
     filteredTasks(state) {
@@ -39,6 +40,7 @@ export default new Vuex.Store({
       })
     },
   },
+
   mutations: {
     // タスクを追加する
     addTask(state, { name, labelIds }) {
@@ -73,8 +75,35 @@ export default new Vuex.Store({
     changeFilter(state, { filter }) {
       state.filter = filter
     },
-  },
-  actions: {
 
+    // ステートを復元する
+    restore (state, { tasks, labels, nextTaskId, nextLabelId }) {
+      state.tasks = tasks
+      state.labels = labels
+      state.nextTaskId = nextTaskId
+      state.nextLabelId = nextLabelId
+    },
+  },
+
+  actions: {
+    // ローカルストレージにステートを保存する
+    save({ state }) {
+      const data = {
+        tasks: state.tasks,
+        labels: state.labels,
+        nextTaskId: state.nextTaskId,
+        nextLabelId: state.nextLabelId,
+      }
+      // Local StorageはdevtoolsのApplicationタブで確認できる
+      localStorage.setItem('task-app-data', JSON.stringify(data))
+    },
+
+    // ローカルストレージからステートを復元する
+    restore({ commit }) {
+      const data = localStorage.getItem('task-app-data')
+      if (data) {
+        commit('restore', JSON.parse(data))
+      }
+    }
   }
 })
