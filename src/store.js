@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import example from './exampleStore.js'
+
 Vue.use(Vuex)
 
 // 例示用に非同期処理を行う関数
@@ -36,12 +38,18 @@ const counter = {
   },
   // ゲッター
   getters: {
-    squared: state => state.count*state.count
+    squared: state => state.count * state.count,
+
+    double: state => state.count + state.count
   },
   // ミューテーション
   mutations: {
     increment(state, amount) {
       state.count += amount
+    },
+
+    update(state, payload) {
+      state.count = payload
     },
   },
   // アクション
@@ -54,11 +62,12 @@ const counter = {
     }
   },
   // モジュールは入れ子に定義することができる
-//  modules: {
-//    childModule: {
-//      // ... 入れ子モジュールの定義 ...
-//    },
-//  },
+  modules: {
+    //childModule: {
+    //  // ... 入れ子モジュールの定義 ...
+    //},
+    example,
+  },
 }
 
 export default new Vuex.Store({

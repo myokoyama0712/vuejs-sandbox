@@ -48,15 +48,6 @@
     <br>
     例えば、ローカルストレージへのアクセス、Ajaxリクエストは副作用です。
   </p>
-
-  <div>
-    <div>count: {{ count }}</div>
-    <div>squared: {{ squared }}</div>
-    <div>
-      <button @click="increment">+5</button>
-      <button @click="incrementAsync">+1async</button>
-    </div>
-  </div>
 </div>
 </template>
 
@@ -82,12 +73,6 @@ export default {
     },
     filter() {
       return this.$store.state.filter
-    },
-    count() {
-      return this.$store.state.counter.count	// ステートはモジュール名の下に登録される
-    },
-    squared() {
-      return this.$store.getters.squared	// ゲッターやミューテーション・アクションはモジュールが絡んでも呼び出し方は変わらない
     },
   },
 
@@ -145,14 +130,6 @@ export default {
     restore() {
       // restoreアクションをディスパッチ
       this.$store.dispatch('restore')
-    },
-
-    // counterモジュール配下のミューテーション・アクションでも呼び出しは通常通り
-    increment() {
-      this.$store.commit('increment', 5)
-    },
-    incrementAsync() {
-      this.$store.dispatch('incrementAsync', { type: 'one' })
     },
   },
 }

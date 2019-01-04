@@ -31,5 +31,10 @@ export default new Router({
       name: 'task-management',
       component: () => import('./views/TaskManagement.vue')
     },
+    {
+      path: '/vuex-module-test',
+      name: 'vuex-module-test',
+      component: () => import('./views/VuexModuleTest.vue')
+    },
   ]
 })

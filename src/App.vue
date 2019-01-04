@@ -4,7 +4,8 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/sandbox">Sandbox</router-link> |
-      <router-link to="/task-management">Task Management</router-link>
+      <router-link to="/task-management">Task Management</router-link> |
+      <router-link to="/vuex-module-test">Vuex Module Test</router-link>
     </div>
     <router-view/>
   </div>
