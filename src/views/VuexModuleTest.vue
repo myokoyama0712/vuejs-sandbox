@@ -3,7 +3,7 @@
   <div>count: {{ count }}</div>
   <div>squared: {{ squared }}</div>
   <div>
-    <button @click="increment">+5</button>
+    <button @click="increment(5)">+5</button>
     <button @click="incrementAsync">+1async</button>
   </div>
 
@@ -24,11 +24,16 @@
 </template>
 
 <script>
+// ヘルパー関数をインポート
+import { mapState, mapMutations } from 'vuex'
+
 export default {
   computed: {
-    count() {
-      return this.$store.state.counter.count	// ステートはモジュール名の下に登録される
-    },
+//    count() {
+//      return this.$store.state.counter.count	// ステートはモジュール名の下に登録される
+//    },
+    // $store.state.counter.countをthis.countに結び付ける
+    ...mapState(['count']),
     squared() {
       return this.$store.getters.squared	// ゲッターやミューテーション・アクションはモジュールが絡んでも呼び出し方は変わらない
     },
@@ -39,9 +44,10 @@ export default {
 
   methods: {
     // counterモジュール配下のミューテーション・アクションでも呼び出しは通常通り
-    increment() {
-      this.$store.commit('increment', 5)
-    },
+//    increment() {
+//      this.$store.commit('increment', 5)
+//    },
+    ...mapMutations(['increment']),
     incrementAsync() {
       this.$store.dispatch('incrementAsync', { type: 'one' })
     },
