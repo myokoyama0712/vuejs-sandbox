@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import example from './exampleStore.js'
+import apiStore from './apiStore.js'
 
 Vue.use(Vuex)
 
@@ -180,5 +181,6 @@ export default new Vuex.Store({
   // counterモジュールをストアに登録
   modules: {
     counter,
+    apiStore,
   },
 })
