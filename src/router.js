@@ -25,6 +25,16 @@ export default new Router({
       path: '/sandbox',
       name: 'sandbox',
       component: () => import('./views/Sandbox.vue')
-    }
+    },
+    {
+      path: '/task-management',
+      name: 'task-management',
+      component: () => import('./views/TaskManagement.vue')
+    },
+    {
+      path: '/vuex-module-test',
+      name: 'vuex-module-test',
+      component: () => import('./views/VuexModuleTest.vue')
+    },
   ]
 })
