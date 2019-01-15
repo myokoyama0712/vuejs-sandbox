@@ -72,21 +72,39 @@ const andOperandList = [
 
 // 再帰関数（JSでは関数式で定義した関数も再帰呼び出しできる）
 const convertListToTree = (list, operator) => {
-  if (list.length === 1) {
-    return list[0]
+  if (operator === 'OR') {
+    if (list.length === 1) {
+      return {
+        filterType: list[0].filterType,
+        operator: list[0].operator,
+        value: list[0].value,
+      }
+    }
+
+    const left = list.slice(0, 1)
+    const right = list.slice(1)
+    return {
+      operator,
+      left: {
+        filterType: left[0].filterType,
+        operator: left[0].operator,
+        value: left[0].value,
+      },
+      right: convertListToTree(right, operator),
+    }
+  } else {
+    if (list.length === 1) {
+      return convertListToTree(list[0].orOperandList, 'OR')
+    }
+
+    const left = list.slice(0, 1)
+    const right = list.slice(1)
+    return {
+      operator,
+      left : convertListToTree(left[0].orOperandList, 'OR'),
+      right: convertListToTree(right, operator),
+    }
   }
-
-  const left = list.slice(0, 1)
-  const right = list.slice(1)
-
-  return {
-    operator,
-    left: left[0],
-    right: convertListToTree(right, operator),
-  }
-}
-
-const dfs = (rootNode) => {
 }
 
 andOperandTree = convertListToTree(andOperandList, 'AND')
