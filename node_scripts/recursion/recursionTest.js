@@ -134,6 +134,13 @@ const makeOrOperandList = (andOperandList) => {
 }
 
 const arrangeOrOperandId = (andOperandList) => {
+  let i = 0
+  for (let andOperand of andOperandList) {
+    for (let orOperand of andOperand.orOperandList) {
+      orOperand.orOperandId = i
+      i++
+    }
+  }
 }
 
 const tree = convertListToTree(andOperandList, 'AND')
@@ -145,4 +152,7 @@ const list = convertTreeToList(tree, 'AND')
 console.log(JSON.stringify({ list }, null, 4))
 console.log('------------------------------------')
 makeOrOperandList(list)
+console.log(JSON.stringify({ list }, null, 4))
+console.log('------------------------------------')
+arrangeOrOperandId(list)
 console.log(JSON.stringify({ list }, null, 4))
