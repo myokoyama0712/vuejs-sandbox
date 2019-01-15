@@ -112,21 +112,37 @@ const convertListToTree = (list, operator) => {
 // left firstでDFS
 // andOperandListをまずは作る
 // 次にorOperandListを作る
-const convertTreeToList = (tree) => {
+const convertTreeToList = (tree, operator) => {
   const andOperandList = []
-  if (tree.operator === 'AND') {
-    andOperandList.push(...convertTreeToList(tree.left))
-    andOperandList.push(...convertTreeToList(tree.right))
+  if (tree.operator === operator) {
+    andOperandList.push(...convertTreeToList(tree.left, operator))
+    andOperandList.push(...convertTreeToList(tree.right, operator))
   } else {
     andOperandList.push(tree)
   }
+
   return andOperandList
 }
 
+const makeOrOperandList = (andOperandList) => {
+  for (let i = 0; i < andOperandList.length; i++) {
+    andOperandList[i] = {
+      andOperandId: i,
+      orOperandList: convertTreeToList(andOperandList[i], 'OR'),
+    }
+  }
+}
+
+const arrangeOrOperandId = (andOperandList) => {
+}
+
 const tree = convertListToTree(andOperandList, 'AND')
-console.log(JSON.stringify(tree))
+console.log(JSON.stringify(tree, null, 4))
 
 console.log('------------------------------------')
 
-const list = convertTreeToList(tree)
-console.log(JSON.stringify(list))
+const list = convertTreeToList(tree, 'AND')
+console.log(JSON.stringify({ list }, null, 4))
+console.log('------------------------------------')
+makeOrOperandList(list)
+console.log(JSON.stringify({ list }, null, 4))
