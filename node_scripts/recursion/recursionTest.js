@@ -71,6 +71,7 @@ const andOperandList = [
 ]
 
 // 再帰関数（JSでは関数式で定義した関数も再帰呼び出しできる）
+// left.length: 1, right.length: n-1
 const convertListToTree = (list, operator) => {
   if (operator === 'OR') {
     if (list.length === 1) {
@@ -107,6 +108,25 @@ const convertListToTree = (list, operator) => {
   }
 }
 
-andOperandTree = convertListToTree(andOperandList, 'AND')
+// 再帰関数
+// left firstでDFS
+// andOperandListをまずは作る
+// 次にorOperandListを作る
+const convertTreeToList = (tree) => {
+  const andOperandList = []
+  if (tree.operator === 'AND') {
+    andOperandList.push(...convertTreeToList(tree.left))
+    andOperandList.push(...convertTreeToList(tree.right))
+  } else {
+    andOperandList.push(tree)
+  }
+  return andOperandList
+}
 
-console.log(JSON.stringify(andOperandTree))
+const tree = convertListToTree(andOperandList, 'AND')
+console.log(JSON.stringify(tree))
+
+console.log('------------------------------------')
+
+const list = convertTreeToList(tree)
+console.log(JSON.stringify(list))
