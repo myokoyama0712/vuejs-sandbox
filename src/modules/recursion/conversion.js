@@ -1,76 +1,4 @@
-const andOperandList = [
-  {
-    andOperandId: 0,
-    orOperandList: [
-      {
-        orOperandId: 0,
-        filterType: 'aaa',
-        operator: 'aaa',
-        value: 'aaa',
-      },
-      {
-        orOperandId: 1,
-        filterType: 'bbb',
-        operator: 'bbb',
-        value: 'bbb',
-      },
-      {
-        orOperandId: 2,
-        filterType: 'ccc',
-        operator: 'ccc',
-        value: 'ccc',
-      },
-    ],
-  },
-  {
-    andOperandId: 1,
-    orOperandList: [
-      {
-        orOperandId: 3,
-        filterType: 'ddd',
-        operator: 'ddd',
-        value: 'ddd',
-      },
-      {
-        orOperandId: 4,
-        filterType: 'eee',
-        operator: 'eee',
-        value: 'eee',
-      },
-      {
-        orOperandId: 5,
-        filterType: 'fff',
-        operator: 'fff',
-        value: 'fff',
-      },
-    ],
-  },
-  {
-    andOperandId: 2,
-    orOperandList: [
-      {
-        orOperandId: 6,
-        filterType: 'ggg',
-        operator: 'ggg',
-        value: 'ggg',
-      },
-      {
-        orOperandId: 7,
-        filterType: 'hhh',
-        operator: 'hhh',
-        value: 'hhh',
-      },
-      {
-        orOperandId: 8,
-        filterType: 'iii',
-        operator: 'iii',
-        value: 'iii',
-      },
-    ],
-  },
-]
-
-const convertFilterListToTree = (list) => {
+export const convertFilterListToTree = (list) => {
 
   // 再帰関数
   // left.length: 1, right.length: n-1に再帰的に2分木を構築する
@@ -113,7 +41,7 @@ const convertFilterListToTree = (list) => {
   return convertListToTree(list, 'AND')
 }
 
-const convertFilterTreeToList = (tree) => {
+export const convertFilterTreeToList = (tree) => {
 
   // 再帰関数
   // operator引数に合致するオペランドのリストを作成する
@@ -161,11 +89,3 @@ const convertFilterTreeToList = (tree) => {
 
   return list
 }
-
-const tree = convertFilterListToTree(andOperandList)
-console.log(JSON.stringify(tree, null, 4))
-
-console.log('------------------------------------')
-
-const list = convertFilterTreeToList(tree)
-console.log(JSON.stringify({ list }, null, 4))
