@@ -8,66 +8,66 @@ const andOperandList = [
         operator: 'aaa',
         value: 'aaa',
       },
-      {
-        orOperandId: 1,
-        filterType: 'bbb',
-        operator: 'bbb',
-        value: 'bbb',
-      },
-      {
-        orOperandId: 2,
-        filterType: 'ccc',
-        operator: 'ccc',
-        value: 'ccc',
-      },
+//      {
+//        orOperandId: 1,
+//        filterType: 'bbb',
+//        operator: 'bbb',
+//        value: 'bbb',
+//      },
+//      {
+//        orOperandId: 2,
+//        filterType: 'ccc',
+//        operator: 'ccc',
+//        value: 'ccc',
+//      },
     ],
   },
-  {
-    andOperandId: 1,
-    orOperandList: [
-      {
-        orOperandId: 3,
-        filterType: 'ddd',
-        operator: 'ddd',
-        value: 'ddd',
-      },
-      {
-        orOperandId: 4,
-        filterType: 'eee',
-        operator: 'eee',
-        value: 'eee',
-      },
-      {
-        orOperandId: 5,
-        filterType: 'fff',
-        operator: 'fff',
-        value: 'fff',
-      },
-    ],
-  },
-  {
-    andOperandId: 2,
-    orOperandList: [
-      {
-        orOperandId: 6,
-        filterType: 'ggg',
-        operator: 'ggg',
-        value: 'ggg',
-      },
-      {
-        orOperandId: 7,
-        filterType: 'hhh',
-        operator: 'hhh',
-        value: 'hhh',
-      },
-      {
-        orOperandId: 8,
-        filterType: 'iii',
-        operator: 'iii',
-        value: 'iii',
-      },
-    ],
-  },
+//  {
+//    andOperandId: 1,
+//    orOperandList: [
+//      {
+//        orOperandId: 3,
+//        filterType: 'ddd',
+//        operator: 'ddd',
+//        value: 'ddd',
+//      },
+//      {
+//        orOperandId: 4,
+//        filterType: 'eee',
+//        operator: 'eee',
+//        value: 'eee',
+//      },
+//      {
+//        orOperandId: 5,
+//        filterType: 'fff',
+//        operator: 'fff',
+//        value: 'fff',
+//      },
+//    ],
+//  },
+//  {
+//    andOperandId: 2,
+//    orOperandList: [
+//      {
+//        orOperandId: 6,
+//        filterType: 'ggg',
+//        operator: 'ggg',
+//        value: 'ggg',
+//      },
+//      {
+//        orOperandId: 7,
+//        filterType: 'hhh',
+//        operator: 'hhh',
+//        value: 'hhh',
+//      },
+//      {
+//        orOperandId: 8,
+//        filterType: 'iii',
+//        operator: 'iii',
+//        value: 'iii',
+//      },
+//    ],
+//  },
 ]
 
 const convertFilterListToTree = (list) => {
@@ -167,5 +167,8 @@ console.log(JSON.stringify(tree, null, 4))
 
 console.log('------------------------------------')
 
-const list = convertFilterTreeToList(tree)
+const list = convertFilterTreeToList(tree)  /* このtreeはもともとなかったIDをもつようになる */
 console.log(JSON.stringify({ list }, null, 4))
+
+//console.log('------------------------------------')
+//console.log(JSON.stringify(tree, null, 4))  /* 基本的には副作用を伴う */

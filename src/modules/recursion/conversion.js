@@ -52,7 +52,7 @@ export const convertFilterTreeToList = (tree) => {
       andOperandList.push(...convertTreeToXxxOperandList(tree.left, operator))
       andOperandList.push(...convertTreeToXxxOperandList(tree.right, operator))
     } else {
-      andOperandList.push(tree)
+      andOperandList.push(tree) // FIXME:? deep copyしないと引数の tree に副作用を伴う
     }
 
     return andOperandList
