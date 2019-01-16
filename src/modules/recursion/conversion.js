@@ -1,4 +1,4 @@
-export const convertFilterListToTree = (list) => {
+export const convertFilterListToTree = list => {
 
   // 再帰関数
   // left.length: 1, right.length: n-1に再帰的に2分木を構築する
@@ -41,7 +41,7 @@ export const convertFilterListToTree = (list) => {
   return convertListToTree(list, 'AND')
 }
 
-export const convertFilterTreeToList = (tree) => {
+export const convertFilterTreeToList = tree => {
 
   // 再帰関数
   // operator引数に合致するオペランドのリストを作成する
@@ -60,7 +60,7 @@ export const convertFilterTreeToList = (tree) => {
 
   // andOperandListの各andOperandをorOperandのリストにする
   // また、各andOperandに0-basedなidを振る
-  const convertAndOperandsToOrOperandLists = (andOperandList) => {
+  const convertAndOperandsToOrOperandLists = andOperandList => {
     for (let i = 0; i < andOperandList.length; i++) {
       andOperandList[i] = {
         andOperandId: i,
@@ -70,7 +70,7 @@ export const convertFilterTreeToList = (tree) => {
   }
 
   // andOperandList中のすべてのorOperandに0-basedなidを振る
-  const numberOrOperandIds = (andOperandList) => {
+  const numberOrOperandIds = andOperandList => {
     let i = 0
     for (let andOperand of andOperandList) {
       for (let orOperand of andOperand.orOperandList) {
