@@ -1,7 +1,6 @@
-export const convertFilterListToTree = list => {
-
+export const convertFilterListToTree = andOperandList => {
   // 再帰関数
-  // left.length: 1, right.length: n-1に再帰的に2分木を構築する
+  // left.length: 1, right.length: n-1として、再帰的に2分木を構築する
   const convertListToTree = (list, operator) => {
     if (operator === 'OR') {
       if (list.length === 1) {
@@ -14,6 +13,7 @@ export const convertFilterListToTree = list => {
 
       const left = list.slice(0, 1)
       const right = list.slice(1)
+
       return {
         operator,
         left: {
@@ -30,6 +30,7 @@ export const convertFilterListToTree = list => {
 
       const left = list.slice(0, 1)
       const right = list.slice(1)
+
       return {
         operator,
         left : convertListToTree(left[0].orOperandList, 'OR'),
@@ -38,7 +39,14 @@ export const convertFilterListToTree = list => {
     }
   }
 
-  return convertListToTree(list, 'AND')
+  // orOperandListが空であるようなandOperandは除外する
+  const filteredList = andOperandList.filter(andOperand => andOperand.orOperandList.length > 0)
+  // andOperandListが結果的に空になった場合は空文字列を返す
+  if (filteredList.length === 0) {
+    return ''
+  }
+
+  return convertListToTree(filteredList, 'AND')
 }
 
 export const convertFilterTreeToList = tree => {
@@ -48,6 +56,7 @@ export const convertFilterTreeToList = tree => {
   // left firstで深さ優先探索
   const convertTreeToXxxOperandList = (tree, operator) => {
     const andOperandList = []
+
     if (tree.operator === operator) {
       andOperandList.push(...convertTreeToXxxOperandList(tree.left, operator))
       andOperandList.push(...convertTreeToXxxOperandList(tree.right, operator))
@@ -78,6 +87,11 @@ export const convertFilterTreeToList = tree => {
         i++
       }
     }
+  }
+
+  // フィルタがない場合の例外処理
+  if (tree === '') {
+    return []
   }
 
   // 1. treeをandOperandListに変換
