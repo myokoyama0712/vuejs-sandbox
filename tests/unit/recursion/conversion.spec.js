@@ -4,6 +4,7 @@ import { assert } from 'chai'
 import { convertFilterListToTree, convertFilterTreeToList } from '@/modules/recursion/conversion.js'
 import testLists from './testLists.js'
 import testTrees from './testTrees.js'
+import cloneTestTrees from './_clone.js'
 import zeroLists from './zeroLists.js'
 import zeroTrees from './zeroTrees.js'
 
@@ -33,17 +34,17 @@ describe('リストツリーの相互変換', () => {
     }
   })
 
-  // 副作用を伴うため、これだけは deep equal とならない
   it('tree -> list -> tree', () => {
-    for (let i = 3; i < testTrees.length; i++) {
-      // const expected = _.cloneDeep(testTrees[i])
-      // const objectTree = _.cloneDeep(testTrees[i])
-      const expected = JSON.parse(JSON.stringify(testTrees[i]))
+    for (let i = 0; i < testTrees.length; i++) {
+      const expected = JSON.parse(JSON.stringify(cloneTestTrees[i]))
       const objectTree = JSON.parse(JSON.stringify(testTrees[i]))
-      const list = convertFilterTreeToList(objectTree)  // sampleTreeにIDが付与される（副作用）
+
+      // listの各要素は生成元のtreeのオブジェクトを指している
+      const list = convertFilterTreeToList(objectTree)  // objectTree にIDが付与される（副作用）
       const tree = convertFilterListToTree(list)
 
       assert.deepEqual(tree, expected)
+      assert.notDeepEqual(tree, objectTree) // objectTreeが汚染されてしまっている
     }
   })
 
